@@ -12,10 +12,34 @@ import com.facebook.react.bridge.ReactContext;
 
 public class SimpleButtonView extends Button {
 
+    public Boolean isOn = false;
+    public void setIsOn (Boolean initialBulbStatus){
+        isOn = initialBulbStatus;
+        updateButton();
+    }
+
     public SimpleButtonView(Context context) {
         super(context);
         this.setTextColor(Color.BLUE);
-        this.setText("NATIVE BUTTON");
+        this.setOnClickListener(changeStatusListener);
+        updateButton();
+    }
+
+    private OnClickListener changeStatusListener = new OnClickListener() {
+        public void onClick(View v) {
+            isOn = !isOn;
+            updateButton();
+        }
+    };
+
+    private void updateButton() {
+        if (isOn) {
+            setBackgroundColor(Color.YELLOW);
+            setText("Switch OFF");
+        } else {
+            setBackgroundColor(Color.BLACK);
+            setText("Switch ON");
+        }
     }
 
     public SimpleButtonView(Context context, AttributeSet attrs) {

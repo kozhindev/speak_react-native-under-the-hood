@@ -32,7 +32,7 @@ const App = () => {
   return (
     <View style={styles.container}>
       <View style={styles.top} />
-      <SimpleButton style={ styles.bottom } />
+      <SimpleButton style={ styles.bottom } isOn={true} />
     </View>
   );
 };
