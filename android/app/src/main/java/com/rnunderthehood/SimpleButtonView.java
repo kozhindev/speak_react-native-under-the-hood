@@ -8,6 +8,8 @@ import android.widget.Button;
 
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactContext;
+import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.uimanager.events.RCTEventEmitter;
 
 
 public class SimpleButtonView extends Button {
@@ -33,6 +35,16 @@ public class SimpleButtonView extends Button {
     };
 
     private void updateButton() {
+        WritableMap event = Arguments.createMap();
+        event.putBoolean("isOn", isOn);
+
+        ReactContext reactContext = (ReactContext)getContext();
+        reactContext.getJSModule(RCTEventEmitter.class).receiveEvent(
+            getId(),
+            "statusChange",
+            event
+        );
+
         if (isOn) {
             setBackgroundColor(Color.YELLOW);
             setText("Switch OFF");
